@@ -1,0 +1,20 @@
+name: Render video
+on:
+  workflow_dispatch:
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: rainbow-train
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - run: npx remotion render src/index.ts RainbowTrain out/rainbow-train.mp4
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rainbow-train
+          path: rainbow-train/out/rainbow-train.mp4
